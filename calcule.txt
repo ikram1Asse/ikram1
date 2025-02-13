@@ -1,0 +1,68 @@
+import { useReducer, useRef } from "react";
+import 'bootstrap/dist/css/bootstrap.css';
+
+const inistate={a:0 , b:0, op:'' ,s:0};
+const reducer=(state, action)=>{
+    switch(action.type){
+        case'+':
+            return{a:action.a, b:action.b, op:'+', s:''};
+        case'-':
+            return{a:action.a, b:action.b, op:'-', s:''};
+        case'*': 
+            return{a:action.a, b:action.b, op:'*', s:''};
+        case'/':
+            return{a:action.a, b:action.b, op:'/', s:''};
+        case'%':
+            return{a:action.a, b:action.b, op:'%', s:''};
+        case'=':
+            switch(state.op){
+                case'+':
+                    return{a:action.a, b:action.b, op:'+', s:action.a + action.b};
+                case'-':
+                    return{a:action.a, b:action.b, op:'-', s:action.a - action.b};
+                case'*': 
+                    return{a:action.a, b:action.b, op:'*', s:action.a * action.b};
+                case'/':
+                    if (action.b=== 0) return{ s:"division par 0 est imposible !"}
+                    else return{a:action.a, b:action.b, op:'/', s:action.a / action.b};
+                case'%':
+                    return{a:action.a, b:action.b, op:'%', s:action.a % action.b};
+                default :
+                    throw new Error()
+            };
+        default:
+            throw new Error();
+    }
+};
+function Calculatrice(){
+    const[etat , dispatch]=useReducer(reducer , state);
+    const ra = useRef();
+    const rb = useRef();
+    return(
+        <div className="container p-5 form-control">
+            <h1><i>Calculatrice</i></h1>
+            <div className="row m-2" >
+                <label className="col-2"> a : </label>
+                <label className="col-2"> b : </label>
+                <label className="col-2"> resultat : </label>
+            </div>
+            <div className="row m-2 ">
+                <input type="number" value={ra} className="col-2"/>
+                <p className="col-1" >{etat.op}</p>
+                <input type="number" value={rb} className="col-2 "/>
+                <p className="col-2"> = {etat.s}</p>
+            </div>
+            <div className="row m-2 offset-3">
+                <button type='button' className="btn btn-light col-2" onClick={()=>dispatch({type:'+'}) }> + </button>
+                <button type='button' className="btn btn-warning col-2" onClick={()=>dispatch({type:'-'}) }> - </button>
+                <button type='button' className="btn btn-info col-2" onClick={()=>dispatch({type:'*'}) }> * </button>
+                <button type='button' className="btn btn-primary col-2" onClick={()=>dispatch({type:'/'}) }> / </button>
+                <button type='button' className="btn btn-danger col-2" onClick={()=>dispatch({type:'%'}) }> % </button>
+            </div>
+            <br />
+            <button type='button' className="btn btn-dark col-2 offset-4 " onClick={()=>dispatch({type:'=', a:etat.a.current.value, b:etat.b.current.value})}> = </button>
+            
+        </div>
+    );
+}
+export default Calculatrice;

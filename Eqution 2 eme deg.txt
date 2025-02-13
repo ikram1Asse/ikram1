@@ -1,0 +1,76 @@
+import 'bootstrap/dist/css/bootstrap.css';
+import { useState } from "react";
+
+const Solution =  () => {
+    return(
+    <>
+        <div className="container">
+            <div className='offset-lg-3 col-lg-6'>
+                <Titre titre="Solution d'equation : ax²+bx+c=0 " />
+                <Equation />
+            </div>
+        </div>
+    </>
+    )
+}
+const Titre = (props) => {
+    return (<h1>{props.titre}</h1>);
+}
+
+
+const Equation =  () => {
+    var [a , setA] = useState(null);
+    var [b , setB] = useState(null);
+    var [c , setC] = useState(null);
+
+    var [sol , setSol] = useState(null);
+    const handleChange = (event) => {
+        if(event.target.name==="a") setA(parseFloat(event.target.value));
+        if(event.target.name==="b") setB(parseFloat(event.target.value));
+        if(event.target.name==="c") setC(parseFloat(event.target.value));
+    }
+    const handleSolution =  () => {
+        if(a===0 && b===0 && c===0) setSol= "Ensemble R"
+        else if(a===0 && b===0 && c!==0) setSol= "Ensemble vide";
+        else if(a===0 && b!==0 ) setSol= "X= " + (-c/b);
+        else{
+            let delta  = Math.pow(b,2) - 4*a*c;
+            if(delta<0)  setSol= "Ensemble vide";   
+            else if(delta===0)   setSol= "X= " + (-b/(2*a));
+            else{
+                setSol= "X= " + ((-b-Math.sqrt(delta))/(2*a)) + "          Y= " + ((-b+Math.sqrt(delta))/(2*a))  ;
+            }
+        }
+    }
+    return(
+        <div className='container'>
+            <div className="row">
+                <div className='form-control'>
+                    <label htmlFor='a'> valeur a : </label>
+                        <input type="text" className='form-control' name="a" id="a" onChange={handleChange} value={a} />
+                </div>  
+                <div className='form-control'>
+                    <label htmlFor='b'> valeur b : </label>
+                        <input type="text" className='form-control' name="b" id="b" onChange={handleChange} value={b} />
+                </div>  
+                <div className='form-control'>
+                    <label htmlFor='c'> valeurc : </label>
+                        <input type="text" className='form-control' name="c" id="c" onChange={handleChange} value={c} />
+                </div>  
+                <div className='form-control'>
+                    La solution de l'eqution est : {sol}
+                </div> 
+              
+                <div className='form-control'>
+                    <button type="button" onClick={handleSolution} className='btn btn-outline-primary'> Resoudre </button>
+                    <button type="button" onClick={null} className='btn btn-outline-danger'> Effacer </button>
+                <button type="button" onClick={null} className='btn btn-outline-warning'> + Historique </button>
+                </div>
+            </div>
+        </div>
+    );            
+
+}
+
+export default Solution;
+
