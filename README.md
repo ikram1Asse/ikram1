@@ -1,9 +1,9 @@
 - 👋 Hi, I’m @ikram1Asse
 - 👀 I’m interested in Front End coding
-- 🌱 I’m currently learning Js / php
-- 💞️ I’m looking to collaborate on Html /css coding project 
+- 🌱 I’m currently learning Java / Laravel
+- 💞️ I’m looking to collaborate on coding projects
 - 📫 How to reach me ...
-- ⚡ Fun fact: i like sport activites 
+- ⚡ Fun fact: I like sports activities 
 
 <!---
 ikram1Asse/ikram1Asse is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
